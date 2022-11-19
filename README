@@ -1,0 +1,3 @@
+My ISP provides a very unstable connection. Up- and download speeds are fine but the ping fluctuates a lot. 
+
+This little tool helps to ping a couple of ip-addresses each second and write the result to an InfluxDB.
