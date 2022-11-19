@@ -6,20 +6,20 @@ namespace ICMPRecorder.Domain;
 public class PingRecord
 {
     [Column("Address", IsTag = true)]
-    public string Address { get; set; }
+    public string Address { get; init; }
 
     [Column("Host", IsTag = true)]
-    public string Host { get; set; }
+    public string Host { get; init; }
 
     [Column("RoundTripTime")]
-    public long RoundTripTime { get; set; }
+    public long RoundTripTime { get; init; }
 
     [Column("Success")]
-    public bool Success { get; set; }
+    public bool Success { get; init; }
 
     [Column("Status")]
-    public string Status { get; set; }
+    public string Status { get; init; }
 
     [Column("TTL")]
-    public int TTL { get; set; }
+    public int TTL { get; init; }
 }
