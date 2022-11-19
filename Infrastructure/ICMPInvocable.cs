@@ -1,6 +1,6 @@
 ﻿using Coravel.Invocable;
-using System.Net.NetworkInformation;
 using ICMPRecorder.Domain;
+using System.Net.NetworkInformation;
 
 namespace ICMPRecorder.Infrastructure;
 
@@ -23,19 +23,22 @@ public class ICMPRecordInvocable : IInvocable
     {
         var result = await _ping.SendPingAsync(_address, 1000);
         var status = Enum.GetName(typeof(IPStatus), result.Status) ?? "unknown";
-        var point = new PingRecord
+        var record = new PingRecord
         {
             RoundTripTime = result.RoundtripTime,
             Address = result.Address.ToString(),
             Success = result.Status == IPStatus.Success,
             Status = status,
             Host = Environment.MachineName
-
         };
 
-        _writer.Write(point);
+        _writer.Write(record);
 
-        if (result.Status != IPStatus.Success)
+        if (result.Status == IPStatus.Success)
+        {
+            _log.LogDebug("[{timestamp}] RTT {ip}: {rtt}ms", DateTime.Now.ToString("HH:mm:ss"), record.Address, record.RoundTripTime);
+        }
+        else
         {
             _log.LogWarning("Ping failed for {address}: {status}", _address, status);
         }
